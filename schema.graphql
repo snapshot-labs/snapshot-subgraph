@@ -1,3 +1,9 @@
+type Block @entity {
+  id: ID!
+  number: BigInt!
+  timestamp: BigInt!
+}
+
 type Delegation @entity {
   id: ID!
   delegator: Bytes!

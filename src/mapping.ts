@@ -1,11 +1,19 @@
-import { store } from '@graphprotocol/graph-ts'
+import { store, ethereum } from '@graphprotocol/graph-ts'
 import { SetDelegate, ClearDelegate } from '../generated/DelegateRegistry/DelegateRegistry'
-import { Delegation } from '../generated/schema'
+import { Block, Delegation } from '../generated/schema'
+
+export function handleBlock(block: ethereum.Block): void {
+  let id = block.hash.toHex()
+  let blockEntity = new Block(id)
+  blockEntity.number = block.number
+  blockEntity.timestamp = block.timestamp
+  blockEntity.save()
+}
 
 export function handleSetDelegate(event: SetDelegate): void {
-  let delegator = event.params.delegator;
-  let space = event.params.id;
-  let delegate = event.params.delegate;
+  let delegator = event.params.delegator
+  let space = event.params.id
+  let delegate = event.params.delegate
   let id = delegator.toHex()
     .concat('-')
     .concat(space.toString())
@@ -20,9 +28,9 @@ export function handleSetDelegate(event: SetDelegate): void {
 }
 
 export function handleClearDelegate(event: ClearDelegate): void {
-  let delegator = event.params.delegator;
-  let space = event.params.id;
-  let delegate = event.params.delegate;
+  let delegator = event.params.delegator
+  let space = event.params.id
+  let delegate = event.params.delegate
   let id = delegator.toHex()
     .concat('-')
     .concat(space.toString())
