@@ -1,13 +1,18 @@
-type Block @entity {
-  id: ID!
-  number: BigInt!
-  timestamp: BigInt!
-}
-
 type Delegation @entity {
   id: ID!
   delegator: Bytes!
   space: String
   delegate: Bytes!
   timestamp: Int!
+}
+
+type Block @entity {
+  id: ID!
+  number: BigInt!
+  timestamp: BigInt!
+}
+
+type Sig @entity {
+  id: ID!
+  msgHash: String!
 }
