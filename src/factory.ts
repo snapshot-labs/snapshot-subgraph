@@ -14,6 +14,7 @@ export function handleProxyCreation(event: ProxyCreation): void {
 
 export function handleSignMsg(event: SignMsg): void {
   let sig = new Sig(event.transaction.hash.toHexString())
-  sig.msgHash = event.params.msgHash.toString()
+  sig.safe = event.address
+  sig.msgHash = event.params.msgHash
   sig.save()
 }
