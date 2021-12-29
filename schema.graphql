@@ -14,6 +14,7 @@ type Block @entity {
 
 type Sig @entity {
   id: ID!
-  safe: Bytes!
-  msgHash: Bytes!
+  account: Bytes!
+  msgHash: String!
+  timestamp: BigInt!
 }
