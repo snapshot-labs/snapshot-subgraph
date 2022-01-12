@@ -25,6 +25,49 @@ dataSources:
           handler: handleSetDelegate
         - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
           handler: handleClearDelegate
-      blockHandlers:
-        - handler: handleBlock
+      # blockHandlers:
+        # - handler: handleBlock
       file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: GnosisSafeProxyFactory
+    network: kovan
+    source:
+      address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'
+      abi: GnosisSafeProxyFactory
+      startBlock: 25059601
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/factory.ts
+      entities:
+        - Sig
+      abis:
+        - name: GnosisSafeProxyFactory
+          file: ./abis/GnosisSafeProxyFactory.json
+        - name: GnosisSafe
+          file: ./abis/GnosisSafe.json
+      eventHandlers:
+        - event: ProxyCreation(address,address)
+          handler: handleProxyCreation
+
+templates:
+  - kind: ethereum/contract
+    name: GnosisSafe
+    network: kovan
+    source:
+      abi: GnosisSafe
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/factory.ts
+      entities:
+        - Sig
+      abis:
+        - name: GnosisSafe
+          file: ./abis/GnosisSafe.json
+      eventHandlers:
+        - event: SignMsg(indexed bytes32)
+          handler: handleSignMsg
