@@ -1,13 +1,17 @@
-import { ProxyCreation as ProxyCreation } from '../generated/GnosisSafeProxyFactory/GnosisSafeProxyFactory'
+import { Address } from '@graphprotocol/graph-ts'
+import { ProxyCreation as ProxyCreation_v1_3_0 } from '../generated/GnosisSafeProxyFactory_v1_3_0/GnosisSafeProxyFactory'
 import { GnosisSafe, SignMsg } from '../generated/templates/GnosisSafe/GnosisSafe'
 import { GnosisSafe as GnosisSafeContract } from '../generated/templates'
 import { Sig } from '../generated/schema'
 
-export function handleProxyCreation(event: ProxyCreation): void {
-  let proxyAddress = event.params.proxy
+function handleProxyCreation(proxyAddress: Address): void {
   let safeInstance = GnosisSafe.bind(proxyAddress)
   let callGetOwnerResult = safeInstance.try_getOwners()
   if (!callGetOwnerResult.reverted) GnosisSafeContract.create(proxyAddress)
+}
+
+export function handleProxyCreation_1_3_0(event: ProxyCreation_v1_3_0): void {
+  handleProxyCreation(event.params.proxy)
 }
 
 export function handleSignMsg(event: SignMsg): void {

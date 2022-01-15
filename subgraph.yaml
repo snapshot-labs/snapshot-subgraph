@@ -30,7 +30,7 @@ dataSources:
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: GnosisSafeProxyFactory
+    name: GnosisSafeProxyFactory_v1_3_0
     network: mainnet
     source:
       address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'
@@ -45,12 +45,12 @@ dataSources:
         - Sig
       abis:
         - name: GnosisSafeProxyFactory
-          file: ./abis/GnosisSafeProxyFactory.json
+          file: ./abis/GnosisSafeProxyFactory_v1.3.0.json
         - name: GnosisSafe
           file: ./abis/GnosisSafe.json
       eventHandlers:
         - event: ProxyCreation(address,address)
-          handler: handleProxyCreation
+          handler: handleProxyCreation_1_3_0
 
 templates:
   - kind: ethereum/contract
