@@ -30,7 +30,30 @@ dataSources:
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: GnosisSafeProxyFactory
+    name: GnosisSafeProxyFactory_v1_1_1
+    network: kovan
+    source:
+      address: '0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B'
+      abi: GnosisSafeProxyFactory
+      startBlock: 15366151
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/factory.ts
+      entities:
+        - Sig
+      abis:
+        - name: GnosisSafeProxyFactory
+          file: ./abis/GnosisSafeProxyFactory_v1.1.1.json
+        - name: GnosisSafe
+          file: ./abis/GnosisSafe.json
+      eventHandlers:
+        - event: ProxyCreation(address)
+          handler: handleProxyCreation_1_1_1
+
+  - kind: ethereum/contract
+    name: GnosisSafeProxyFactory_v1_3_0
     network: kovan
     source:
       address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'
@@ -45,12 +68,12 @@ dataSources:
         - Sig
       abis:
         - name: GnosisSafeProxyFactory
-          file: ./abis/GnosisSafeProxyFactory.json
+          file: ./abis/GnosisSafeProxyFactory_v1.3.0.json
         - name: GnosisSafe
           file: ./abis/GnosisSafe.json
       eventHandlers:
         - event: ProxyCreation(address,address)
-          handler: handleProxyCreation
+          handler: handleProxyCreation_1_3_0
 
 templates:
   - kind: ethereum/contract
