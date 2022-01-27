@@ -11,6 +11,7 @@
     "deploy-rinkeby": "graph deploy snapshot-labs/snapshot-rinkeby subgraph.rinkeby.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-matic": "graph deploy snapshot-labs/snapshot-polygon subgraph.matic.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-bsc": "graph deploy snapshot-labs/snapshot-binance-smart-chain subgraph.bsc.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-gnosis-chain": "graph deploy snapshot-labs/snapshot-gnosis-chain subgraph.gnosis-chain.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-local": "graph deploy snapshot-labs/snapshot --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
