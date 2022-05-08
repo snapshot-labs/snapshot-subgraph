@@ -21,7 +21,7 @@ export function handleSetDelegate(event: SetDelegate): void {
     .concat(delegate.toHex())
   let delegation = new Delegation(id)
   delegation.delegator = delegator
-  delegation.space = space.toString()
+  delegation.space = space.toString() || ''
   delegation.delegate = delegate
   delegation.timestamp = event.block.timestamp.toI32()
   delegation.save()
@@ -33,7 +33,7 @@ export function handleClearDelegate(event: ClearDelegate): void {
   let delegate = event.params.delegate
   let id = delegator.toHex()
     .concat('-')
-    .concat(space.toString())
+    .concat(space.toString() || '')
     .concat('-')
     .concat(delegate.toHex())
   store.remove('Delegation', id);
