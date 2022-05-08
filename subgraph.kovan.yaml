@@ -13,7 +13,7 @@ dataSources:
       startBlock: 21640465
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Delegation
@@ -38,7 +38,7 @@ dataSources:
       startBlock: 15366151
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/factory.ts
       entities:
@@ -61,7 +61,7 @@ dataSources:
       startBlock: 25059601
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/factory.ts
       entities:
@@ -83,7 +83,7 @@ templates:
       abi: GnosisSafe
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/factory.ts
       entities:
