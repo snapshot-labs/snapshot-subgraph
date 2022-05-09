@@ -1,0 +1,32 @@
+specVersion: 0.0.2
+description: Snapshot subgraph
+repository: https://github.com/snapshot-labs/snapshot-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DelegateRegistry
+    network: boba
+    source:
+      address: '0x605Ca1417326f12B7A84eAb5ca730B366371F72a'
+      abi: DelegateRegistry
+      startBlock: 561990
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Delegation
+      abis:
+        - name: DelegateRegistry
+          file: ./abis/DelegateRegistry.json
+      eventHandlers:
+        - event: SetDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleSetDelegate
+        - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleClearDelegate
+      # blockHandlers:
+        # - handler: handleBlock
+      file: ./src/mapping.ts
+
+
