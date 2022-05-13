@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'
       abi: DelegateRegistry
-      startBlock: 561990
+      startBlock: 597797
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
