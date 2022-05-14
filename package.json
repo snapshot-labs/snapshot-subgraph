@@ -1,6 +1,6 @@
 {
   "name": "snapshot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "create": "graph create snapshot-labs/snapshot --node https://api.thegraph.com/deploy/",
     "create-local": "graph create snapshot-labs/snapshot --node http://127.0.0.1:8020",
