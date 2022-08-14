@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: DelegateRegistry
-    network: mainnet
+    network: optimism
     source:
       address: '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'
       abi: DelegateRegistry
