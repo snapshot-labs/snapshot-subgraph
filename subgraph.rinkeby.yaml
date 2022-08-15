@@ -25,6 +25,4 @@ dataSources:
           handler: handleSetDelegate
         - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
           handler: handleClearDelegate
-      # blockHandlers:
-        # - handler: handleBlock
       file: ./src/mapping.ts

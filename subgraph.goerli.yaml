@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-description: Snapshot goerli subgraph
+description: Snapshot subgraph
 repository: https://github.com/snapshot-labs/snapshot-subgraph
 schema:
   file: ./schema.graphql
@@ -25,6 +25,4 @@ dataSources:
           handler: handleSetDelegate
         - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
           handler: handleClearDelegate
-      # blockHandlers:
-        # - handler: handleBlock
       file: ./src/mapping.ts
