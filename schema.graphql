@@ -2,7 +2,7 @@ type Delegation @entity {
   id: ID!
   delegator: Bytes!
   space: String!
-  delegate: Bytes!
+  delegate: Delegate!
   timestamp: Int!
 }
 
@@ -17,4 +17,11 @@ type Sig @entity {
   account: Bytes!
   msgHash: String!
   timestamp: BigInt!
+}
+
+type Delegate @entity {
+  id: ID!
+  address: Bytes!
+  createdAt: Int!
+  delegatorsCount: Int!
 }
