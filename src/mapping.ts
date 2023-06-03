@@ -29,6 +29,7 @@ export function handleSetDelegate(event: SetDelegate): void {
   let delegateEntity = Delegate.load(delegateId)
   if (!delegateEntity) {
     delegateEntity = new Delegate(delegateId)
+    delegateEntity.space = space.toString()
     delegateEntity.address = delegate
     delegateEntity.createdAt = event.block.timestamp.toI32()
     delegateEntity.delegatorsCount = 0

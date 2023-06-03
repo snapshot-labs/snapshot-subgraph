@@ -21,6 +21,7 @@ type Sig @entity {
 
 type Delegate @entity {
   id: ID!
+  space: String!
   address: Bytes!
   createdAt: Int!
   delegatorsCount: Int!
