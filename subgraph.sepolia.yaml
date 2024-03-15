@@ -1,0 +1,28 @@
+specVersion: 0.0.2
+description: Snapshot subgraph
+repository: https://github.com/snapshot-labs/snapshot-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DelegateRegistry
+    network: sepolia
+    source:
+      address: '0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446'
+      abi: DelegateRegistry
+      startBlock: 5492465
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Delegation
+      abis:
+        - name: DelegateRegistry
+          file: ./abis/DelegateRegistry.json
+      eventHandlers:
+        - event: SetDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleSetDelegate
+        - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleClearDelegate
+      file: ./src/mapping.ts
