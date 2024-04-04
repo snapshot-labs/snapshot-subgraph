@@ -9,6 +9,7 @@
     "deploy-studio": "graph deploy --studio snapshot",
     "deploy": "graph deploy snapshot-labs/snapshot --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-goerli": "graph deploy snapshot-labs/snapshot-goerli subgraph.goerli.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-sepolia": "graph deploy snapshot-labs/snapshot-sepolia subgraph.sepolia.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-kovan": "graph deploy snapshot-labs/snapshot-kovan subgraph.kovan.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-rinkeby": "graph deploy snapshot-labs/snapshot-rinkeby subgraph.rinkeby.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-matic": "graph deploy snapshot-labs/snapshot-polygon subgraph.matic.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
