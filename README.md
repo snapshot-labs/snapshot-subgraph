@@ -6,6 +6,7 @@ This subgraph indexes the data from the Snapshot delegation contracts.
 
 - Create a new file similar to `subgraph.sepolia.yaml`
 - Find `startBlock` of contract on new network
+- Update `startBlock` and `network` with new values
 - Create a new script in package.json similar to `deploy-studio-sepolia`
 
 ### How to deploy to studio

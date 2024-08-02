@@ -8,6 +8,7 @@
     "build": "graph build",
     "deploy-studio": "graph deploy --studio snapshot",
     "deploy-studio-sepolia": "graph deploy --studio snapshot-sepolia subgraph.sepolia.yaml",
+    "deploy-studio-base": "graph deploy --studio snapshot-base subgraph.base.yaml",
     "deploy": "graph deploy snapshot-labs/snapshot --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-goerli": "graph deploy snapshot-labs/snapshot-goerli subgraph.goerli.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-kovan": "graph deploy snapshot-labs/snapshot-kovan subgraph.kovan.yaml --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
