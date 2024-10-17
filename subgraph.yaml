@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Snapshot subgraph
 repository: https://github.com/snapshot-labs/snapshot-subgraph
 schema:
