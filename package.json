@@ -8,6 +8,7 @@
     "build": "graph build",
     "deploy-studio": "graph deploy --studio snapshot",
     "deploy-studio-sepolia": "graph deploy --studio snapshot-sepolia subgraph.sepolia.yaml",
+    "deploy-studio-sonic": "graph deploy --studio snapshot-sonic subgraph.sonic.yaml",
     "deploy-studio-base": "graph deploy --studio snapshot-base subgraph.base.yaml",
     "deploy-studio-base-sepolia": "graph deploy --studio snapshot-base-sepolia subgraph.base-sepolia.yaml",
     "deploy-studio-blast-mainnet": "graph deploy --studio snapshot-blast-mainnet subgraph.blast-mainnet.yaml",
