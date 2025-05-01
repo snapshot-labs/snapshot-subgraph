@@ -1,8 +1,10 @@
-specVersion: 0.0.2
+specVersion: 1.3.0
 description: Snapshot subgraph
 repository: https://github.com/snapshot-labs/snapshot-subgraph
 schema:
   file: ./schema.graphql
+indexerHints:
+  prune: never
 dataSources:
   - kind: ethereum/contract
     name: DelegateRegistry
@@ -13,7 +15,7 @@ dataSources:
       startBlock: 19067342
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.9
       language: wasm/assemblyscript
       entities:
         - Delegation
@@ -36,7 +38,7 @@ dataSources:
       startBlock: 173709
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.9
       language: wasm/assemblyscript
       file: ./src/factory.ts
       entities:
@@ -58,7 +60,7 @@ templates:
       abi: GnosisSafe
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.9
       language: wasm/assemblyscript
       file: ./src/factory.ts
       entities:
