@@ -6,7 +6,7 @@
     "create-local": "graph create snapshot-labs/snapshot --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy-studio": "graph deploy --studio snapshot",
+    "deploy-studio": "graph deploy --studio snapshot subgraph.yaml",
     "deploy-studio-gnosis-chain": "graph deploy --studio snapshot-gnosis-chain subgraph.gnosis-chain.yaml",
     "deploy-studio-arbitrum-one": "graph deploy --studio snapshot-arbitrum-one subgraph.arbitrum-one.yaml",
     "deploy-studio-optimism": "graph deploy --studio snapshot-optimism subgraph.optimism.yaml",
