@@ -1,0 +1,30 @@
+specVersion: 1.3.0
+description: Snapshot subgraph
+repository: https://github.com/snapshot-labs/snapshot-subgraph
+schema:
+  file: ./schema.graphql
+indexerHints:
+  prune: never
+dataSources:
+  - kind: ethereum/contract
+    name: DelegateRegistry
+    network: apechain-curtis
+    source:
+      address: "0xdd6b74123b2ab93ad701320d3f8d1b92b4fa5202"
+      abi: DelegateRegistry
+      startBlock: 17757368
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Delegation
+      abis:
+        - name: DelegateRegistry
+          file: ./abis/DelegateRegistry.json
+      eventHandlers:
+        - event: SetDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleSetDelegate
+        - event: ClearDelegate(indexed address,indexed bytes32,indexed address)
+          handler: handleClearDelegate
+      file: ./src/mapping.ts
