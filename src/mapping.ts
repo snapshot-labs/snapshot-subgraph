@@ -22,6 +22,7 @@ export function handleSetDelegate(event: SetDelegate): void {
   let delegation = new Delegation(id)
   delegation.delegator = delegator
   delegation.space = space.toString()
+  delegation.space_raw = space
   delegation.delegate = delegate
   delegation.timestamp = event.block.timestamp.toI32()
   delegation.save()

@@ -2,6 +2,7 @@ type Delegation @entity {
   id: ID!
   delegator: Bytes!
   space: String!
+  space_raw: Bytes!
   delegate: Bytes!
   timestamp: Int!
 }
