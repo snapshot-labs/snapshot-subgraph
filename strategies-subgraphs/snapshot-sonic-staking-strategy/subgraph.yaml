@@ -1,0 +1,38 @@
+specVersion: 1.3.0
+description: Snapshot Sonic Staking Strategy Subgraph
+repository: https://github.com/snapshot-labs/snapshot-subgraph
+schema:
+  file: ./schema.graphql
+indexerHints:
+  prune: never
+dataSources:
+  - kind: ethereum/contract
+    name: SFC
+    network: sonic
+    source:
+      address: '0xFC00FACE00000000000000000000000000000000'
+      abi: SFC
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+        - Validator
+        - DeactivatedValidators
+      abis:
+        - name: SFC
+          file: ./abis/SFC.json
+      eventHandlers:
+        - event: Delegated(indexed address,indexed uint256,uint256)
+          handler: handleDelegated
+        - event: Undelegated(indexed address,indexed uint256,uint256)
+          handler: handleUndelegated
+        - event: RestakedRewards(indexed address,indexed uint256,uint256)
+          handler: handleRestakedRewards
+        - event: CreatedValidator(indexed uint256,indexed address)
+          handler: handleCreatedValidator
+        - event: ChangedValidatorStatus(indexed uint256,uint256)
+          handler: handleChangedValidatorStatus
+      file: ./src/mapping.ts
