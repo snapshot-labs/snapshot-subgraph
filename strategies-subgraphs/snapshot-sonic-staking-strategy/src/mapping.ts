@@ -17,38 +17,17 @@ function toBigDecimal(value: BigInt): BigDecimal {
   return value.toBigDecimal().div(BigDecimal.fromString('1000000000000000000'))
 }
 
-export function handleBlock(block: ethereum.Block): void {
-  // Initialize all existing validators on first block only
-  let contract = SFC.bind(Address.fromString('0xFC00FACE00000000000000000000000000000000'))
-  let lastValidatorIDResult = contract.try_lastValidatorID()
-  
-  if (!lastValidatorIDResult.reverted) {
-    let lastValidatorID = lastValidatorIDResult.value
-    
-    // Pre-populate validators 1 to lastValidatorID
-    for (let i = 1; i <= lastValidatorID.toI32(); i++) {
-      let validatorId = i.toString()
-      let validator = Validator.load(validatorId)
-      
-      if (validator == null) {
-        let callResult = contract.try_getValidator(BigInt.fromI32(i))
-        if (!callResult.reverted) {
-          validator = new Validator(validatorId)
-          validator.address = callResult.value.value2 // auth field
-          validator.totalDelegationReceived = BigDecimal.fromString('0')
-          validator.status = callResult.value.value0 // status field
-          validator.save()
-        }
-      }
-    }
-  }
-}
-
 function getOrCreateValidator(validatorId: string): Validator {
   let validator = Validator.load(validatorId)
   if (validator == null) {
     validator = new Validator(validatorId)
-    validator.address = Bytes.fromHexString('0x0000000000000000000000000000000000000000')
+    let contract = SFC.bind(Address.fromString('0xFC00FACE00000000000000000000000000000000'))
+    let callResult = contract.try_getValidator(BigInt.fromString(validatorId))
+    if (!callResult.reverted) {
+      validator.address = callResult.value.value2 // auth field
+    } else {
+      validator.address = Bytes.fromHexString('0x0000000000000000000000000000000000000000')
+    }
     validator.totalDelegationReceived = BigDecimal.fromString('0')
     validator.status = BigInt.fromI32(0) // OK_STATUS
     validator.save()
