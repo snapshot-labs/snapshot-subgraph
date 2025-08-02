@@ -30,7 +30,6 @@ function getOrCreateValidator(validatorId: string): Validator {
     }
     validator.totalDelegationReceived = BigDecimal.fromString('0')
     validator.status = BigInt.fromI32(0) // OK_STATUS
-    validator.save()
   }
   return validator
 }
@@ -122,8 +121,7 @@ export function handleDelegated(event: Delegated): void {
 export function handleUndelegated(event: Undelegated): void {
   let stakeEntity = Stake.load(event.params.delegator.toHex())
   if (stakeEntity == null) {
-    stakeEntity = new Stake(event.params.delegator.toHex())
-    stakeEntity.stakedTo = []
+    return
   }
   let amount = toBigDecimal(event.params.amount)
   let validatorId = event.params.toValidatorID.toString()
