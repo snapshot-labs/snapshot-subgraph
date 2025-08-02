@@ -35,4 +35,8 @@ dataSources:
           handler: handleCreatedValidator
         - event: ChangedValidatorStatus(indexed uint256,uint256)
           handler: handleChangedValidatorStatus
+      blockHandlers:
+        - handler: handleBlock
+          filter:
+            kind: once
       file: ./src/mapping.ts

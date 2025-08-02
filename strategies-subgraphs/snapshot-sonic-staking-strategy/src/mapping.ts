@@ -1,4 +1,4 @@
-import { BigInt, Bytes, BigDecimal, Address } from '@graphprotocol/graph-ts'
+import { BigInt, Bytes, BigDecimal, Address, ethereum } from '@graphprotocol/graph-ts'
 import {
   Delegated,
   Undelegated,
@@ -17,6 +17,33 @@ function toBigDecimal(value: BigInt): BigDecimal {
   return value.toBigDecimal().div(BigDecimal.fromString('1000000000000000000'))
 }
 
+export function handleBlock(block: ethereum.Block): void {
+  // Initialize all existing validators on first block only
+  let contract = SFC.bind(Address.fromString('0xFC00FACE00000000000000000000000000000000'))
+  let lastValidatorIDResult = contract.try_lastValidatorID()
+  
+  if (!lastValidatorIDResult.reverted) {
+    let lastValidatorID = lastValidatorIDResult.value
+    
+    // Pre-populate validators 1 to lastValidatorID
+    for (let i = 1; i <= lastValidatorID.toI32(); i++) {
+      let validatorId = i.toString()
+      let validator = Validator.load(validatorId)
+      
+      if (validator == null) {
+        let callResult = contract.try_getValidator(BigInt.fromI32(i))
+        if (!callResult.reverted) {
+          validator = new Validator(validatorId)
+          validator.address = callResult.value.value2 // auth field
+          validator.totalDelegationReceived = BigDecimal.fromString('0')
+          validator.status = callResult.value.value0 // status field
+          validator.save()
+        }
+      }
+    }
+  }
+}
+
 function getOrCreateValidator(validatorId: string): Validator {
   let validator = Validator.load(validatorId)
   if (validator == null) {
@@ -24,11 +51,6 @@ function getOrCreateValidator(validatorId: string): Validator {
     validator.address = Bytes.fromHexString('0x0000000000000000000000000000000000000000')
     validator.totalDelegationReceived = BigDecimal.fromString('0')
     validator.status = BigInt.fromI32(0) // OK_STATUS
-    let contract = SFC.bind(Address.fromString('0xFC00FACE00000000000000000000000000000000'))
-    let callResult = contract.try_getValidator(BigInt.fromString(validatorId))
-    if (!callResult.reverted) {
-      validator.address = callResult.value.value2 // auth field from contract
-    }
     validator.save()
   }
   return validator
@@ -48,6 +70,7 @@ function updateDeactivatedValidatorsList(validatorId: string, isDeactivated: boo
   let validatorIds = deactivatedValidators.validatorIds
   let index = validatorIds.indexOf(validatorId)
   
+  // Only save if the list actually changes
   if (isDeactivated && index == -1) {
     // Add to deactivated list if not already present
     validatorIds.push(validatorId)
@@ -59,6 +82,7 @@ function updateDeactivatedValidatorsList(validatorId: string, isDeactivated: boo
     deactivatedValidators.validatorIds = validatorIds
     deactivatedValidators.save()
   }
+  // No save needed if no change occurred
 }
 
 function updateValidatorDelegation(validatorId: string, amount: BigDecimal, isAdd: boolean): void {
@@ -106,9 +130,14 @@ export function handleDelegated(event: Delegated): void {
     stakeEntity.stakedTo = []
   }
   let amount = toBigDecimal(event.params.amount)
-  updateValidatorBalance(stakeEntity, event.params.toValidatorID.toString(), amount, true)
+  let validatorId = event.params.toValidatorID.toString()
+  
+  // Update stake balance
+  updateValidatorBalance(stakeEntity, validatorId, amount, true)
   stakeEntity.save()
-  updateValidatorDelegation(event.params.toValidatorID.toString(), amount, true)
+  
+  // Update validator delegation (this will save the validator)
+  updateValidatorDelegation(validatorId, amount, true)
 }
 
 export function handleUndelegated(event: Undelegated): void {
@@ -118,9 +147,14 @@ export function handleUndelegated(event: Undelegated): void {
     stakeEntity.stakedTo = []
   }
   let amount = toBigDecimal(event.params.amount)
-  updateValidatorBalance(stakeEntity, event.params.toValidatorID.toString(), amount, false)
+  let validatorId = event.params.toValidatorID.toString()
+  
+  // Update stake balance
+  updateValidatorBalance(stakeEntity, validatorId, amount, false)
   stakeEntity.save()
-  updateValidatorDelegation(event.params.toValidatorID.toString(), amount, false)
+  
+  // Update validator delegation (this will save the validator)
+  updateValidatorDelegation(validatorId, amount, false)
 }
 
 export function handleRestakedRewards(event: RestakedRewards): void {
@@ -130,9 +164,14 @@ export function handleRestakedRewards(event: RestakedRewards): void {
     stakeEntity.stakedTo = []
   }
   let rewards = toBigDecimal(event.params.rewards)
-  updateValidatorBalance(stakeEntity, event.params.toValidatorID.toString(), rewards, true)
+  let validatorId = event.params.toValidatorID.toString()
+  
+  // Update stake balance
+  updateValidatorBalance(stakeEntity, validatorId, rewards, true)
   stakeEntity.save()
-  updateValidatorDelegation(event.params.toValidatorID.toString(), rewards, true)
+  
+  // Update validator delegation (this will save the validator)
+  updateValidatorDelegation(validatorId, rewards, true)
 }
 
 export function handleCreatedValidator(event: CreatedValidator): void {
@@ -146,9 +185,14 @@ export function handleCreatedValidator(event: CreatedValidator): void {
 export function handleChangedValidatorStatus(event: ChangedValidatorStatus): void {
   let validatorId = event.params.validatorID.toString()
   let validator = getOrCreateValidator(validatorId)
-  validator.status = event.params.status
-  validator.save()
+  let newStatus = event.params.status
   
-  let isDeactivated = !event.params.status.equals(BigInt.fromI32(0))
-  updateDeactivatedValidatorsList(validatorId, isDeactivated)
+  // Only update and save if status actually changed
+  if (!validator.status.equals(newStatus)) {
+    validator.status = newStatus
+    validator.save()
+    
+    let isDeactivated = !newStatus.equals(BigInt.fromI32(0))
+    updateDeactivatedValidatorsList(validatorId, isDeactivated)
+  }
 }
