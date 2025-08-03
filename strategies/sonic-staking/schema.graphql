@@ -8,7 +8,7 @@ type Stake @entity {
 type Validator @entity {
   id: ID! # validator ID as string
   address: Bytes! # validator address
-  totalDelegationReceived: BigDecimal! # total delegations received
+  totalDelegationReceived: BigInt! # total delegations received (in wei)
   status: BigInt! # validator status (0 = OK_STATUS, other values indicate issues)
 }
 
