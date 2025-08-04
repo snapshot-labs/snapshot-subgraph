@@ -4,16 +4,10 @@ type Stake @entity {
   stakedTo: [String!]! # array of "validatorId:amount" strings
 }
 
-# Validator data
+# Validator data  
 type Validator @entity {
   id: ID! # validator ID as string
   address: Bytes! # validator address
-  totalDelegationReceived: BigInt! # total delegations received (in wei)
+  totalDelegationReceived: BigDecimal! # total delegations received
   status: BigInt! # validator status (0 = OK_STATUS, other values indicate issues)
-}
-
-# Tracks list of deactivated validator IDs
-type DeactivatedValidators @entity {
-  id: ID! # singleton entity with id "deactivated"
-  validatorIds: [String!]! # array of deactivated validator IDs
 }
