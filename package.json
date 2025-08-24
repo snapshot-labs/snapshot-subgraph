@@ -19,12 +19,14 @@
     "deploy-studio-blast-mainnet": "graph deploy --studio snapshot-blast-mainnet subgraph.blast-mainnet.yaml",
     "deploy-studio-linea": "graph deploy --studio snapshot-linea subgraph.linea.yaml",
     "deploy-studio-bsc": "graph deploy --studio snapshot-bsc subgraph.bsc.yaml",
+    "deploy-studio-apechain": "graph deploy --studio snapshot-apechain subgraph.apechain.yaml",
+    "deploy-studio-curtis": "graph deploy --studio snapshot-curtis subgraph.curtis.yaml",
     "deploy-mantle": "graph deploy snapshot-labs/snapshot-mantle subgraph.mantle.yaml --node https://subgraph-api.mantle.xyz/deploy --ipfs https://subgraph-api.mantle.xyz/ipfs",
     "deploy-local": "graph deploy snapshot-labs/snapshot --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
     "strategy-sonic-staking": "cd strategies-subgraphs/snapshot-sonic-staking-strategy && graph codegen && graph build"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.69.2",
-    "@graphprotocol/graph-ts": "^0.26.0"
+    "@graphprotocol/graph-ts": "^0.34.0"
   }
 }
